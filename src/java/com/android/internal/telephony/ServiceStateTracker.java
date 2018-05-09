@@ -301,7 +301,7 @@ public class ServiceStateTracker extends Handler {
             // Set the network type, in case the radio does not restore it.
             int subId = mPhone.getSubId();
             if (mPreviousSubId.getAndSet(subId) != subId) {
-                if (SubscriptionManager.isValidSubscriptionId(subId)) {
+                if (mSubscriptionController.isActiveSubId(subId)) {
                     Context context = mPhone.getContext();
 
                     mPhone.notifyPhoneStateChanged();
@@ -368,7 +368,7 @@ public class ServiceStateTracker extends Handler {
     };
 
     //Common
-    private GsmCdmaPhone mPhone;
+    protected GsmCdmaPhone mPhone;
     public CellLocation mCellLoc;
     private CellLocation mNewCellLoc;
     public static final int MS_PER_HOUR = 60 * 60 * 1000;
@@ -1805,7 +1805,7 @@ public class ServiceStateTracker extends Handler {
         }
     }
 
-    void handlePollStateResultMessage(int what, AsyncResult ar) {
+    protected void handlePollStateResultMessage(int what, AsyncResult ar) {
         int ints[];
         switch (what) {
             case EVENT_POLL_STATE_REGISTRATION: {
@@ -4391,7 +4391,7 @@ public class ServiceStateTracker extends Handler {
      * @return true if the signal strength changed and a notification was sent.
      */
     protected boolean onSignalStrengthResult(AsyncResult ar) {
-        boolean isGsm = false;
+        boolean isGsm = mPhone.isPhoneTypeGsm();
         int dataRat = mSS.getRilDataRadioTechnology();
         int voiceRat = mSS.getRilVoiceRadioTechnology();
 

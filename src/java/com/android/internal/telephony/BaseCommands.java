@@ -855,8 +855,7 @@ public abstract class BaseCommands implements CommandsInterface {
         return mRilVersion;
     }
 
-    public void setUiccSubscription(int slotId, int appIndex, int subId, int subStatus,
-            Message response) {
+    public void setUiccSubscription(int appIndex, boolean activate, Message response) {
     }
 
     public void setDataAllowed(boolean allowed, Message response) {
@@ -938,5 +937,28 @@ public abstract class BaseCommands implements CommandsInterface {
     @Override
     public void unregisterForCarrierInfoForImsiEncryption(Handler h) {
         mCarrierInfoForImsiEncryptionRegistrants.remove(h);
+    }
+
+    @Override
+    public void iccOpenLogicalChannel(String AID, int p2, Message response) {
+    }
+
+    @Override
+    public void iccCloseLogicalChannel(int channel, Message response) {
+    }
+
+    @Override
+    public void iccTransmitApduLogicalChannel(int channel, int cla, int instruction,
+                                              int p1, int p2, int p3, String data,
+                                              Message response) {
+    }
+
+    @Override
+    public void iccTransmitApduBasicChannel(int cla, int instruction, int p1, int p2,
+                                            int p3, String data, Message response) {
+    }
+
+    @Override
+    public void getAtr(Message response) {
     }
 }
